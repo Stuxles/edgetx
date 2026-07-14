@@ -242,6 +242,11 @@ void adcCalibStore()
 uint16_t getAnalogValue(uint8_t index)
 {
   if (index >= MAX_ANALOG_INPUTS) return 0;
+#if defined(RADIO_TANGO) || defined(RADIO_TANGO2) || defined(RADIO_MAMBO)
+  if (index < 4) {
+    return getTbsStickValue(index);
+  }
+#endif
   return adcValues[index];
 }
 

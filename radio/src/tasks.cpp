@@ -184,5 +184,12 @@ void tasksStart()
               AUDIO_TASK_PRIO);
 #endif
 
+#if defined(RADIO_TANGO) || defined(RADIO_TANGO2) || defined(RADIO_MAMBO)
+#if !defined(SIMU)
+  extern void tbsCrossfireTaskStart();
+  tbsCrossfireTaskStart();
+#endif
+#endif
+
   RTOS_START();
 }

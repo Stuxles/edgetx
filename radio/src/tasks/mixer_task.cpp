@@ -195,6 +195,10 @@ void mixerTask()
       if (getSelectedUsbMode() == USB_JOYSTICK_MODE) {
         usbJoystickUpdate();
       }
+#if defined(RADIO_TANGO) || defined(RADIO_TANGO2) || defined(RADIO_MAMBO)
+      extern void updateIntCrossfireChannels();
+      updateIntCrossfireChannels();
+#endif
 #endif
 
       // we are the main actor to reset the watchdog timer
