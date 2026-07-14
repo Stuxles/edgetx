@@ -84,6 +84,8 @@
  #else
   #include "yaml_datastructs_x9dp2019.cpp"
  #endif
+#elif defined(PCBTANGO2) || defined(PCBMAMBO)
+ #include "yaml_datastructs_128x64.cpp"
 #else
 #error "Board not supported by YAML storage"
 #endif
