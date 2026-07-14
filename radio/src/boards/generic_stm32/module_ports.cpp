@@ -72,7 +72,7 @@ static const stm32_usart_t intmoduleUSART = {
 
 DEFINE_STM32_SERIAL_PORT(InternalModule, intmoduleUSART, INTMODULE_FIFO_SIZE, 0);
 
-#else // INTMODULE_USART
+#elif defined(INTMODULE_TIMER) // INTMODULE_USART
 
 #include "stm32_pulse_driver.h"
 #include "timers_driver.h"
@@ -420,7 +420,7 @@ static const etx_module_port_t _internal_ports[] = {
     .drv = { .serial = &STM32SerialDriver },
     .hw_def = REF_STM32_SERIAL_PORT(InternalModule),
   },
-#else // INTMODULE_USART
+#elif defined(INTMODULE_TIMER) // INTMODULE_USART
   {
     .port = ETX_MOD_PORT_SOFT_INV,
     .type = ETX_MOD_TYPE_SERIAL,

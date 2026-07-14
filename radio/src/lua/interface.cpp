@@ -600,7 +600,7 @@ static const char * getScriptName(uint8_t idx)
   else if (ref <= SCRIPT_GFUNC_LAST) {
     return g_eeGeneral.customFn[ref - SCRIPT_GFUNC_FIRST].play.name;
   }
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
   else if (ref <= SCRIPT_TELEMETRY_LAST) {
     return g_model.screens[ref - SCRIPT_TELEMETRY_FIRST].script.file;
   }
@@ -698,7 +698,7 @@ static bool luaLoadFunctionScript(uint8_t ref)
   return false;
 }
 
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
 static bool luaLoadTelemetryScript(uint8_t ref)
 {
   uint8_t idx = ref - SCRIPT_TELEMETRY_FIRST;
@@ -725,7 +725,7 @@ static bool luaLoadTelemetryScript(uint8_t ref)
 
 bool isTelemetryScriptAvailable()
 {
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
   for (int i = 0; i < luaScriptsCount; i++) {
     ScriptInternalData & sid = scriptInternalData[i];
     if (sid.reference == SCRIPT_TELEMETRY_FIRST + selectedTelemView) {
@@ -907,7 +907,7 @@ static void luaLoadScripts(bool init, const char * filename = nullptr)
           continue;
         }
       }
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
       else if (ref <= SCRIPT_TELEMETRY_LAST) {
         if (luaLoadTelemetryScript(ref)) {
           luaError(lsScripts, scriptInternalData[luaScriptsCount - 1].state);
@@ -1044,7 +1044,7 @@ static bool resumeLua(bool init, bool allowLcdUsage)
 
   // Run in the right interactive mode
   if (lua_status(lsScripts) == LUA_YIELD && allowLcdUsage != luaLcdAllowed) {
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
     uint8_t ref = scriptInternalData[idx].reference;
     if (luaLcdAllowed && menuHandlers[menuLevel] != menuViewTelemetry && ref >= SCRIPT_TELEMETRY_FIRST && ref <= SCRIPT_TELEMETRY_LAST) {
       // Telemetry screen was exited while foreground function was preempted - finish in the background
@@ -1149,7 +1149,7 @@ static bool resumeLua(bool init, bool allowLcdUsage)
             }
           } else continue;
         }
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
         else if (ref <= SCRIPT_TELEMETRY_LAST) {
           if (sid.background == LUA_REFNIL) continue;
           lua_rawgeti(lsScripts, LUA_REGISTRYINDEX, sid.background);

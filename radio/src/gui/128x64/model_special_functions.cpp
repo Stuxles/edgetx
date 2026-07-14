@@ -78,7 +78,7 @@ void onCustomFunctionsFileSelectionMenu(const char * result)
   }
 }
 
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
 void onAdjustGvarSourceLongEnterPress(const char * result)
 {
   CustomFunctionData * cfn = &g_model.customFn[menuVerticalPosition];
@@ -151,7 +151,7 @@ void onCustomFunctionsMenu(const char * result)
     storageDirty(eeFlags);
   }
 }
-#endif // PCBTARANIS
+#endif // PCBTARANIS || PCBTANGO2 || PCBMAMBO
 
 static bool isAssignableFunctionAvailableSorted(int value)
 {
@@ -164,7 +164,7 @@ void menuSpecialFunctions(event_t event, CustomFunctionData * functions, CustomF
 
   uint8_t eeFlags = (functions == g_model.customFn) ? EE_MODEL : EE_GENERAL;
 
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
 #if defined(PCBXLITE)
   // ENT LONG on xlite brings up switch type menu, so this menu is activated with SHIFT + ENT LONG
   if (menuHorizontalPosition==0 && event==EVT_KEY_LONG(KEY_ENTER) && keysGetState(KEY_SHIFT)) {
@@ -188,7 +188,7 @@ void menuSpecialFunctions(event_t event, CustomFunctionData * functions, CustomF
     }
     POPUP_MENU_START(onCustomFunctionsMenu);
   }
-#endif // PCBTARANIS
+#endif // PCBTARANIS || PCBTANGO2 || PCBMAMBO
 
   for (uint8_t i=0; i<NUM_BODY_LINES; i++) {
     coord_t y = MENU_HEADER_HEIGHT + 1 + i*FH;

@@ -168,7 +168,7 @@ void onSdManagerMenu(const char * result)
     audioQueue.stopAll();
     audioQueue.playFile(lfn, 0, ID_PLAY_FROM_SD_MANAGER);
   }
-#if LCD_DEPTH > 1
+#if LCD_DEPTH > 1 && LEN_BITMAP_NAME > 0
   else if (result == STR_ASSIGN_BITMAP) {
     strAppendFilename(g_model.header.bitmap, line, LEN_BITMAP_NAME);
     memcpy(modelHeaders[g_eeGeneral.currModel].bitmap, g_model.header.bitmap, LEN_BITMAP_NAME);
@@ -273,13 +273,13 @@ void onUpdateReceiverSelection(const char * result)
 
 void menuRadioSdManager(event_t _event)
 {
-#if LCD_DEPTH > 1
+#if LCD_DEPTH > 1 && LEN_BITMAP_NAME > 0
   int lastPos = menuVerticalPosition;
 #endif
 
   if (_event == EVT_ENTRY) {
     f_chdir(ROOT_PATH);
-#if LCD_DEPTH > 1
+#if LCD_DEPTH > 1 && LEN_BITMAP_NAME > 0
     lastPos = -1;
 #endif
   }
@@ -356,7 +356,7 @@ void menuRadioSdManager(event_t _event)
           if (!strcasecmp(ext, SOUNDS_EXT)) {
             POPUP_MENU_ADD_ITEM(STR_PLAY_FILE);
           }
-#if LCD_DEPTH > 1
+#if LCD_DEPTH > 1 && LEN_BITMAP_NAME > 0
           else if (isExtensionMatching(ext, BITMAPS_EXT)) {
             if ((ext-line) <= LEN_BITMAP_NAME) {
               POPUP_MENU_ADD_ITEM(STR_ASSIGN_BITMAP);
@@ -598,7 +598,7 @@ void menuRadioSdManager(event_t _event)
     }
 #endif
 
-#if LCD_DEPTH > 1
+#if LCD_DEPTH > 1 && LEN_BITMAP_NAME > 0
     const char * ext = getFileExtension(reusableBuffer.sdManager.lines[index]);
     if (ext && isExtensionMatching(ext, BITMAPS_EXT)) {
       if (lastPos != menuVerticalPosition) {

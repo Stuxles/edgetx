@@ -428,7 +428,7 @@ void onModelAntennaSwitchConfirm(const char * result)
 #if defined(PCBX7ACCESS)
   #define TRAINER_BLUETOOTH_ROW          (g_model.trainerData.mode == TRAINER_MODE_MASTER_BLUETOOTH ? TRAINER_BLUETOOTH_M_ROW : (g_model.trainerData.mode == TRAINER_MODE_SLAVE_BLUETOOTH ? TRAINER_BLUETOOTH_S_ROW : HIDDEN_ROW))
   #define TRAINER_PPM_PARAMS_ROW         (g_model.trainerData.mode == TRAINER_MODE_SLAVE ? (uint8_t)2 : HIDDEN_ROW)
-  #define TRAINER_ROWS                   LABEL(Trainer), 0, IF_BT_TRAINER_ON(TRAINER_BLUETOOTH_ROW), TRAINER_CHANNELS_ROW, TRAINER_PPM_PARAMS_ROW
+  #define TRAINER_ROWS                   LABEL(Trainer), 0, IF_BT_TRAINER_ON(TRAINER_BLUETOOTH_ROW), TRAINER_CHANNELS_ROW, TRAINER_PPM_PARAMS_ROW,
 #elif defined(PCBX7) || defined(PCBX9LITE)
   #if defined(BLUETOOTH)
     #define TRAINER_BLUETOOTH_ROW        (g_model.trainerData.mode == TRAINER_MODE_MASTER_BLUETOOTH ? TRAINER_BLUETOOTH_M_ROW : (g_model.trainerData.mode == TRAINER_MODE_SLAVE_BLUETOOTH ? TRAINER_BLUETOOTH_S_ROW : HIDDEN_ROW)),
@@ -436,14 +436,14 @@ void onModelAntennaSwitchConfirm(const char * result)
     #define TRAINER_BLUETOOTH_ROW
   #endif
   #define TRAINER_PPM_PARAMS_ROW         (g_model.trainerData.mode == TRAINER_MODE_SLAVE ? (uint8_t)2 : HIDDEN_ROW)
-  #define TRAINER_ROWS                   LABEL(Trainer), 0, TRAINER_BLUETOOTH_ROW TRAINER_CHANNELS_ROW, TRAINER_PPM_PARAMS_ROW
+  #define TRAINER_ROWS                   LABEL(Trainer), 0, TRAINER_BLUETOOTH_ROW TRAINER_CHANNELS_ROW, TRAINER_PPM_PARAMS_ROW,
 #elif defined(PCBXLITES)
   #define TRAINER_BLUETOOTH_ROW          (g_model.trainerData.mode == TRAINER_MODE_MASTER_BLUETOOTH ? TRAINER_BLUETOOTH_M_ROW : (g_model.trainerData.mode == TRAINER_MODE_SLAVE_BLUETOOTH ? TRAINER_BLUETOOTH_S_ROW : HIDDEN_ROW))
   #define TRAINER_PPM_PARAMS_ROW         (g_model.trainerData.mode == TRAINER_MODE_SLAVE ? (uint8_t)2 : HIDDEN_ROW)
-  #define TRAINER_ROWS                   LABEL(Trainer), 0, IF_BT_TRAINER_ON(TRAINER_BLUETOOTH_ROW), TRAINER_CHANNELS_ROW, TRAINER_PPM_PARAMS_ROW
+  #define TRAINER_ROWS                   LABEL(Trainer), 0, IF_BT_TRAINER_ON(TRAINER_BLUETOOTH_ROW), TRAINER_CHANNELS_ROW, TRAINER_PPM_PARAMS_ROW,
 #elif defined(PCBXLITE)
   #define TRAINER_BLUETOOTH_ROW          (g_model.trainerData.mode == TRAINER_MODE_MASTER_BLUETOOTH ? TRAINER_BLUETOOTH_M_ROW : (g_model.trainerData.mode == TRAINER_MODE_SLAVE_BLUETOOTH ? TRAINER_BLUETOOTH_S_ROW : HIDDEN_ROW))
-  #define TRAINER_ROWS                   IF_BT_TRAINER_ON(LABEL(Trainer)), IF_BT_TRAINER_ON(0), IF_BT_TRAINER_ON(TRAINER_BLUETOOTH_ROW), IF_BT_TRAINER_ON(TRAINER_CHANNELS_ROW), HIDDEN_ROW /* xlite has only BT trainer, so never PPM */
+  #define TRAINER_ROWS                   IF_BT_TRAINER_ON(LABEL(Trainer)), IF_BT_TRAINER_ON(0), IF_BT_TRAINER_ON(TRAINER_BLUETOOTH_ROW), IF_BT_TRAINER_ON(TRAINER_CHANNELS_ROW), HIDDEN_ROW, /* xlite has only BT trainer, so never PPM */
 #else
   #define TRAINER_ROWS
 #endif
@@ -804,9 +804,7 @@ void menuModelSetup(event_t event)
   int8_t old_editMode = s_editMode;
   bool CURSOR_ON_CELL = (menuHorizontalPosition >= 0);
 
-#if defined(PCBTARANIS)
   int8_t old_posHorz = menuHorizontalPosition;
-#endif
 
   MENU_TAB({
     HEADER_LINE_COLUMNS
@@ -845,7 +843,7 @@ void menuModelSetup(event_t event)
 
     EXTRA_MODULE_ROWS
 
-    TRAINER_ROWS,
+    TRAINER_ROWS
 
     // View options
     0,
@@ -1241,6 +1239,7 @@ void menuModelSetup(event_t event)
                                                   g_model.customThrottleWarningPosition, -100, 100, attr, event);
         break;
 
+#if defined(PCBTARANIS)
       case ITEM_MODEL_SETUP_SWITCHES_WARNING2:
       case ITEM_MODEL_SETUP_SWITCHES_WARNING3:
         if (i==0) {
@@ -1250,6 +1249,7 @@ void menuModelSetup(event_t event)
             menuVerticalOffset++;
         }
         break;
+#endif
 
       case ITEM_MODEL_SETUP_SWITCHES_WARNING1:
         {
@@ -1324,6 +1324,7 @@ void menuModelSetup(event_t event)
         break;
       }
 
+#if defined(PCBTARANIS)
       case ITEM_MODEL_SETUP_POTS_WARNING:
         lcdDrawTextIndented(y, STR_POTWARNING);
         lcdDrawTextAtIndex(MODEL_SETUP_2ND_COLUMN, y, STR_PREFLIGHT_POTSLIDER_CHECK, g_model.potsWarnMode, (menuHorizontalPosition == 0) ? attr : 0);
@@ -1378,6 +1379,7 @@ void menuModelSetup(event_t event)
           }
         }
         break;
+#endif
 
       case ITEM_MODEL_SETUP_BEEP_CENTER: {
         lcdDrawTextAlignedLeft(y, STR_BEEPCTR);

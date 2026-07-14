@@ -34,6 +34,18 @@ constexpr coord_t MARKER_WIDTH      = 5;
 #define BITMAP_BUFFER_SIZE(w, h)      (2 + (w) * (((h)+7)/8))
 #define DISPLAY_BUFFER_SIZE           (LCD_W*((LCD_H+7)/8))
 
+#if LCD_DEPTH > 1
+#define GREY(x)                       ((x) * 0x010000)
+#define WHITE                         GREY(0xf)
+#define GREY_DEFAULT                  GREY(11)
+#define COLOUR_MASK(x)                ((x) & 0x0F0000)
+#else
+#define GREY(x)                       0
+#define WHITE                         0
+#define GREY_DEFAULT                  0
+#define COLOUR_MASK(x)                0
+#endif
+
 #include "lcd_common.h"
 
 void drawTimerWithMode(coord_t x, coord_t y, uint8_t index, LcdFlags att);

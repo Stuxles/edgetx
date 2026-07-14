@@ -59,7 +59,7 @@
   #define MAX_TELEMETRY_SENSORS        60
 #endif
   #define MAX_CUSTOM_SCREENS           10
-#elif defined(PCBX9D) || defined(PCBX9DP) || defined(PCBX9E)
+#elif defined(PCBX9D) || defined(PCBX9DP) || defined(PCBX9E) || defined(PCBTANGO2) || defined(PCBMAMBO)
   #define MAX_MODELS                   60
   #define MAX_OUTPUT_CHANNELS          32 // number of real output channels CH1-CH32
   #define MAX_FLIGHT_MODES             9
@@ -355,7 +355,7 @@ enum TelemetryUnit {
   #define NUM_LINE_ITEMS 2
 #endif
 
-#if defined(PCBTARANIS)
+#if defined(PCBTARANIS) || defined(PCBTANGO2) || defined(PCBMAMBO)
   #define MAX_TELEM_SCRIPT_INPUTS  8
 #endif
 
