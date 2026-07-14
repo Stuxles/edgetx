@@ -101,4 +101,13 @@ boards = {
         "PCB": "X7",
         "PCBREV": "T14",
     },
+    "TANGO2": {
+        "PCB": "TANGO2",
+        "INTERNAL_MODULE_CRSF": "YES",
+    },
+    "MAMBO": {
+        "PCB": "MAMBO",
+        "INTERNAL_MODULE_CRSF": "YES",
+    },
 }
+
